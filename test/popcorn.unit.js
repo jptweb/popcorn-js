@@ -11,7 +11,6 @@ test("API", function() {
 
   stop( 10000 );
 
-
   try {
 
     ok( Popcorn, "Popcorn exists");
@@ -491,17 +490,17 @@ module("Popcorn Prototype Methods");
 test("roundTime", function() {
 
   QUnit.reset();
-	
+
 	expect( 1 );
 	stop(5000);
   var popped = Popcorn("#video");
-  
+
   popped.listen( "canplayall", function() {
-  
+
 	  popped.play().pause().currentTime( 0.98 );
 
 	  equals( 1, popped.roundTime(), ".roundTime() returns 1 when currentTime is 0.98s" );
-	  
+
 	  start();
 	});
 
@@ -2173,7 +2172,7 @@ test( "Popcorn Compose", function() {
   // runs once, 2 tests
   Popcorn.plugin( "pluginOptions1", {
     _setup: function( options ) {
-    
+
       ok( options.pluginoption, "plugin option one exists at setup" );
       plus();
       ok( !options.composeoption, "compose option one does not exist at setup" );
@@ -2786,56 +2785,54 @@ test("Index Integrity (timeupdate)", function() {
   });
 
   var p = Popcorn("#video");
-  p.listen( "canplayall", function() { 
+  p.listen( "canplayall", function() {
 		p.ff({
 			id: "removeable-track-event",
 			start: 40,
 			end: 41
 		});
-		
+
 		p.currentTime(40).pause();
-		console.log( "1 currentTime: ", p.currentTime() );
 		stop( 10000 );
-	
+
 		equals(p.data.trackEvents.endIndex, 0, "p.data.trackEvents.endIndex is 0");
 		equals(p.data.trackEvents.startIndex, 0, "p.data.trackEvents.startIndex is 0");
 		equals(p.data.trackEvents.byStart.length, 3, "p.data.trackEvents.byStart.length is 3 - before play" );
-	
+
 		p.listen("timeupdate", function() {
-	
+
 			if ( p.roundTime() > 40 && p.roundTime() < 42 && hasrun && !lastrun ) {
 
 				lastrun = true;
-	
+
 				equals( document.getElementById("index-test"), null, "document.getElementById('index-test') is null on second run - after removeTrackEvent" );
-	
+
 				start();
 			}
-	
+
 			if ( p.roundTime() >= 42 && !hasrun ) {
 
 				hasrun  = true;
 				p.pause();
-	
+
 				equals(p.data.trackEvents.byStart.length, 3, "p.data.trackEvents.byStart.length is 3 - after play, before removeTrackEvent" );
 				equals(p.data.trackEvents.startIndex, 2, "p.data.trackEvents.startIndex is 2 - after play, before removeTrackEvent");
 				equals(p.data.trackEvents.endIndex, 2, "p.data.trackEvents.endIndex is 2 - after play, before removeTrackEvent");
-	
+
 				p.removeTrackEvent("removeable-track-event");
-	
+
 				equals(p.data.trackEvents.byStart.length, 2, "p.data.trackEvents.byStart.length is 2 - after removeTrackEvent" );
 				equals(p.data.trackEvents.startIndex, 1, "p.data.trackEvents.startIndex is 1 - after removeTrackEvent");
 				equals(p.data.trackEvents.endIndex, 1, "p.data.trackEvents.endIndex is 1 - after removeTrackEvent");
-	
+
 				p.currentTime(40).play();
-	
+
 			}
 	});
-	
+
 	p.play();
-	console.log( "2 currentTime: ", p.currentTime() );
 	});
-		
+
 });
 
 test("Index Integrity (frameAnimation)", function() {
@@ -2860,7 +2857,7 @@ test("Index Integrity (frameAnimation)", function() {
   });
 
   var p = Popcorn("#video", { frameAnimation: true });
-  
+
   p.listen( "canplayall", function() {
 
 		p.ff({
@@ -2868,45 +2865,45 @@ test("Index Integrity (frameAnimation)", function() {
 			start: 40,
 			end: 41
 		});
-	
+
 		p.currentTime(40).pause();
-	
+
 		stop( 10000 );
-	
+
 		equals(p.data.trackEvents.endIndex, 0, "p.data.trackEvents.endIndex is 0");
 		equals(p.data.trackEvents.startIndex, 0, "p.data.trackEvents.startIndex is 0");
 		equals(p.data.trackEvents.byStart.length, 3, "p.data.trackEvents.byStart.length is 3 - before play" );
-	
+
 		p.listen("timeupdate", function() {
-	
+
 			if ( p.roundTime() > 40 && p.roundTime() < 42 && hasrun && !lastrun ) {
-	
+
 				lastrun = true;
-	
+
 				equals( document.getElementById("index-test"), null, "document.getElementById('index-test') is null on second run - after removeTrackEvent" );
-	
+
 				start();
 			}
-	
+
 			if ( p.roundTime() >= 42 && !hasrun ) {
-	
+
 				hasrun  = true;
 				p.pause();
-	
+
 				equals(p.data.trackEvents.byStart.length, 3, "p.data.trackEvents.byStart.length is 3 - after play, before removeTrackEvent" );
 				equals(p.data.trackEvents.startIndex, 2, "p.data.trackEvents.startIndex is 2 - after play, before removeTrackEvent");
 				equals(p.data.trackEvents.endIndex, 2, "p.data.trackEvents.endIndex is 2 - after play, before removeTrackEvent");
-	
+
 				p.removeTrackEvent("removeable-track-event");
-	
+
 				equals(p.data.trackEvents.byStart.length, 2, "p.data.trackEvents.byStart.length is 2 - after removeTrackEvent" );
 				equals(p.data.trackEvents.startIndex, 1, "p.data.trackEvents.startIndex is 1 - after removeTrackEvent");
 				equals(p.data.trackEvents.endIndex, 1, "p.data.trackEvents.endIndex is 1 - after removeTrackEvent");
-	
+
 				p.currentTime(40).play();
 			}
 		});
-	
+
 		p.play();
   });
 
@@ -3204,8 +3201,6 @@ if ( !/file/.test( location.protocol ) ) {
         ok(data, "getJSONP returns data");
         plus();
 
-
-
         ok( QUnit.equiv(data, testObj) , "Popcorn.xhr.getJSONP data.json returns an object of data");
         plus();
 
@@ -3217,7 +3212,6 @@ if ( !/file/.test( location.protocol ) ) {
   test("JSONP Response", function() {
 
     expect(1);
-
 
     stop(10000);
     ok(false, "jsonp requests require a webserver with php");
@@ -3239,8 +3233,7 @@ test("Popcorn.getScript()", function() {
 
   expect(expects);
 
-  stop();
-
+  stop(10000);
 
   Popcorn.xhr({
 
@@ -3252,8 +3245,6 @@ test("Popcorn.getScript()", function() {
 
       ok( true, "getScript A returned");
       plus();
-
-
 
       ok( Popcorn.AlphaLib, "Popcorn.xhr.getScript remoteA.js loaded: `Popcorn.AlphaLib` is available");
       plus();
@@ -3280,21 +3271,20 @@ test("Popcorn.getScript()", function() {
 
   Popcorn.getScript(
 
-    "https://github.com/rwldrn/has.js/raw/master/has.js",
+    "http://popcornjs.org/code/plugins/footnote/popcorn.footnote.js",
 
     function() {
 
       ok( true, "getScript C returned");
       plus();
 
-
-      ok( ("has" in window) , "Popcorn.getScript https://github.com/rwldrn/has.js/raw/master/has.js loaded: `has` is available");
+			var p = Popcorn( "#video" );
+      ok( ("footnote" in p) , "Popcorn.getScript http://popcornjs.org/code/plugins/footnote/popcorn.footnote.js loaded: `footnote` is available");
       plus();
 
       delete window["has"];
     }
   );
-
 
   var cb = function( id ) {
     if ( window.testFunction ) {
@@ -3324,7 +3314,7 @@ test("XML Response", function() {
 
   expect(expects);
 
-  stop()
+  stop(10000)
 
 
   Popcorn.xhr({
@@ -3359,7 +3349,7 @@ test("dataType: XML Response", function() {
 
   expect(expects);
 
-  stop()
+  stop(10000)
 
 
   Popcorn.xhr({
@@ -3372,7 +3362,6 @@ test("dataType: XML Response", function() {
 
       var parser = new DOMParser(),
       xml = parser.parseFromString('<?xml version="1.0" encoding="UTF-8"?><dashboard><locations class="foo"><location for="bar"><infowindowtab> <tab title="Location"><![CDATA[blabla]]></tab> <tab title="Users"><![CDATA[blublu]]></tab> </infowindowtab> </location> </locations> </dashboard>',"text/xml");
-
 
       equals( data.toString(), xml.toString(), "dataType: 'xml', data.xml returns a document of xml");
       plus();
