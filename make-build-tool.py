@@ -93,7 +93,6 @@ def process( root, filename, dist, m ):
     return '    { "name": "' + folder + '/' + filename + '", "description": "' + description +'" }, \n'
 
 print "Building dist/plugins ..."
-print os.path.exists(addonsdir + "/plugins")
 manifestText = manifestText + '\n  "plugins": [\n'
 for root, dirs, filenames in os.walk( addonsdir + "/plugins" ):
   for filename in filenames:
@@ -133,9 +132,10 @@ for root, dirs, filenames in os.walk( addonsdir + "/modules" ):
     sys.stdout.flush()
     sys.stderr.flush()
 
-    text = process( root, filename, moduledist, manifestText )
-    if ( text ):
-      manifestText = manifestText + text
+    if ( re.search( "sequence/build|sequence/test", root ) == None ):
+      text = process( root, filename, moduledist, manifestText )
+      if ( text ):
+        manifestText = manifestText + text
 
 print "Building dist/effects/ ..."
 manifestText = manifestText[:len( manifestText ) - 3 ]  + '\n  ], \n  "effects": [\n'

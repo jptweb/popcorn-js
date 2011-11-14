@@ -2,11 +2,12 @@
 PREFIX = .
 BUILD_DIR = ${PREFIX}/build
 DIST_DIR = ${PREFIX}/dist
-PLUGINS_DIR = ${PREFIX}/plugins
-PARSERS_DIR = ${PREFIX}/parsers
-PLAYERS_DIR = ${PREFIX}/players
-EFFECTS_DIR = $(PREFIX)/effects
-MODULES_DIR = $(PREFIX)/modules
+ADDONS_DIR = ${PREFIX}/addons
+PLUGINS_DIR = ${ADDONS_DIR}/plugins
+PARSERS_DIR = ${ADDONS_DIR}/parsers
+PLAYERS_DIR = ${ADDONS_DIR}/players
+EFFECTS_DIR = $(ADDONS_DIR)/effects
+MODULES_DIR = $(ADDONS_DIR)/modules
 
 # Version number used in naming release files. Defaults to git commit sha.
 VERSION ?= $(shell git show -s --pretty=format:%h)
@@ -264,11 +265,12 @@ testing: complete
 build-tool: clean setup
 	@@echo "Building Popcorn build tool"
 	@@python make-build-tool.py
-	@@cd ./popcorn/; make all VERSION=${VERSION}; cd ../
+	@@make popcorn VERSION=${VERSION}
 
 clean:
 	@@echo "Removing Distribution directory:" ${DIST_DIR}
 	@@rm -rf ${DIST_DIR}
+	@@rm -f manifest.json
 
 setup:
 	@@echo "Updating submodules..."
