@@ -13,10 +13,10 @@
   <head>
     <title>Popcorn Twitter Video Demo</title>
       <script src="../../popcorn.js"></script>
-      <script src="../../players/youtube/popcorn.youtube.js"></script>
-			<script src="../../players/vimeo/popcorn.vimeo.js"></script>
-      <script src="../../plugins/twitter/popcorn.twitter.js"></script>
-      <script>     
+      <script src="../../addons/players/youtube/popcorn.youtube.js"></script>
+			<script src="../../addons/players/vimeo/popcorn.vimeo.js"></script>
+      <script src="../../addons/plugins/twitter/popcorn.twitter.js"></script>
+      <script>
       document.addEventListener( "DOMContentLoaded", function() {
 
         var srtBtn = document.getElementById( "srtBtn" );
@@ -25,20 +25,20 @@
           srtBtn.addEventListener( "click", btnClick, false );
 
        }, false );
-      
+
 			var count = 0;
         function btnClick(){
           var popcorn, ok = false;
-          
+
 					// Anytime after the first click, remove the current video and
 					// wipe the current twitter feed
 					if(count != 0){
 						popcorn = "";
 						document.getElementById('twitterdiv').innerHTML = "";
 					}
-					
+
 					count++;
-					
+
           // If statements parsing URL entered in the textbox, checking for keywords
           // and displaying the video accordingly, displays error message if the
           // video type is incompatable
@@ -72,7 +72,7 @@
 
 								"<source id='mp4'" +
 									"type='video/mp4; codecs=\"avc1, mp4a\"'>" +
-									
+
 							"</video>";
 						document.getElementById( 'mp4' ).src = document.getElementById( 'vidUrl' ).value;
 						popcorn = Popcorn( '#video2' );
