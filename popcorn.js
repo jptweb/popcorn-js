@@ -1801,6 +1801,8 @@
 
             evt = document.createEvent( eventInterface );
             evt.initEvent( eventName, true, true, window, 1 );
+          } else {
+            popcorn.trigger( eventName );
           }
         }
 
