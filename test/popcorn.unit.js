@@ -3073,7 +3073,9 @@ test( "In/Out aliases", function() {
     plus();
   });
 
-  popcorn.play();
+  popcorn.listen( "seeked", function() {
+    this.unlisten( "seeked" ).play();
+  });
 });
 
 module( "Popcorn TrackEvents" );
