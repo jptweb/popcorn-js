@@ -24,7 +24,7 @@ test( "Popcorn wordriver Plugin", function() {
   plus();
 
   popped.wordriver({
-		start: 0,
+		start: 1,
 		end: 2,
 		text: "hello",
 		target: "wordriverdiv",
@@ -34,7 +34,7 @@ test( "Popcorn wordriver Plugin", function() {
   firstTrack = popped.getLastTrackEventId();
 
   popped.wordriver({
-		start: 2,
+		start: 3,
 		end: 4,
 		text: "world",
 		target: "wordriverdiv",
@@ -52,7 +52,7 @@ test( "Popcorn wordriver Plugin", function() {
   })
   .volume( 0 );
 
-  popped.exec( 0, function() {
+  popped.exec( 1, function() {
     equals( wordriverdiv.children[ 0 ].childElementCount, 1, "wordriverdiv now has one inner element" );
     plus();
     equals( wordriverdiv.children[ 0 ].children[ 0 ].style.opacity, 1, "first word is visible on the page" );
@@ -63,7 +63,7 @@ test( "Popcorn wordriver Plugin", function() {
     plus();
   });
 
-  popped.exec( 2, function() {
+  popped.exec( 3, function() {
     equals( wordriverdiv.children[ 0 ].childElementCount, 2, "wordriverdiv now has two inner elements" );
     plus();
     equals( wordriverdiv.children[ 0 ].children[ 0 ].style.opacity, 0, "first word is not visible on the page" );
